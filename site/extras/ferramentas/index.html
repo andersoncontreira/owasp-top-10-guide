@@ -1,0 +1,1662 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Arsenal de ferramentas gratuitas para testar e melhorar a segurança de aplicações web">
+      
+      
+        <meta name="author" content="Anderson Contreira">
+      
+      
+      
+        <link rel="prev" href="../glossario/">
+      
+      
+        <link rel="next" href="../proximos-passos/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Ferramentas de Segurança Web - OWASP Top 10:2025 — Guia Didático</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ferramentas-de-seguranca-web" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="OWASP Top 10:2025 — Guia Didático" class="md-header__button md-logo" aria-label="OWASP Top 10:2025 — Guia Didático" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Top 10:2025 — Guia Didático
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Ferramentas de Segurança Web
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="orange"  aria-label="Tema claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Tema claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="orange"  aria-label="Tema escuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Tema escuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introducao/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introdução
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../vulnerabilidades/a01-broken-access-control/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Vulnerabilidades
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../glossario/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Extras
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OWASP Top 10:2025 — Guia Didático" class="md-nav__button md-logo" aria-label="OWASP Top 10:2025 — Guia Didático" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OWASP Top 10:2025 — Guia Didático
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introducao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introdução
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vulnerabilidades
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Vulnerabilidades
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a01-broken-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A01:2025 — Broken Access Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a02-security-misconfiguration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A02:2025 — Security Misconfiguration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a03-software-supply-chain-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A03:2025 — Software Supply Chain Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a04-cryptographic-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A04:2025 — Cryptographic Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a05-injection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A05:2025 — Injection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a06-insecure-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A06:2025 — Insecure Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a07-authentication-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A07:2025 — Authentication Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a08-software-data-integrity-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A08:2025 — Software or Data Integrity Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a09-security-logging-alerting-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A09:2025 — Security Logging and Alerting Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a10-mishandling-exceptional-conditions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A10:2025 — Mishandling of Exceptional Conditions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Extras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossario/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossário de Segurança Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ferramentas de Segurança Web
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ferramentas de Segurança Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dast-dynamic-application-security-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DAST — Dynamic Application Security Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sast-static-application-security-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SAST — Static Application Security Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analise-de-dependencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análise de Dependências
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testes-de-injecao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testes de Injeção
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autenticacao-e-senhas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autenticação e Senhas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analise-de-trafego-e-rede" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análise de Tráfego e Rede
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloud Security
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analise-de-containers-e-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análise de Containers e Kubernetes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#labs-e-ambientes-de-pratica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Labs e Ambientes de Prática
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verificacao-de-configuracao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação de Configuração
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoramento-e-siem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoramento e SIEM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integracao-em-pipeline-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integração em Pipeline CI/CD
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../proximos-passos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Próximos Passos em Segurança Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ferramentas-de-seguranca-web">Ferramentas de Segurança Web</h1>
+<p>Ferramentas gratuitas e open source organizadas por categoria. Todas são usadas profissionalmente e têm ampla documentação disponível.</p>
+<div class="admonition warning">
+<p class="admonition-title">Use apenas em ambientes autorizados</p>
+<p>Todas as ferramentas abaixo podem ser usadas para fins ofensivos e defensivos. Use <strong>apenas em sistemas que você tem autorização explícita para testar</strong>. Usar essas ferramentas em sistemas de terceiros sem permissão é ilegal.</p>
+</div>
+<hr />
+<h2 id="dast-dynamic-application-security-testing">DAST — Dynamic Application Security Testing</h2>
+<p>Ferramentas que testam aplicações <strong>em execução</strong>, simulando ataques externos.</p>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Descrição</th>
+<th>Uso Principal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OWASP ZAP</strong></td>
+<td>Scanner web open source, mantido pela OWASP</td>
+<td>Scan automático e manual de aplicações web</td>
+</tr>
+<tr>
+<td><strong>Burp Suite Community</strong></td>
+<td>Proxy de intercepção HTTP, padrão da indústria</td>
+<td>Análise e modificação de requisições HTTP</td>
+</tr>
+<tr>
+<td><strong>Nikto</strong></td>
+<td>Scanner de vulnerabilidades em servidores web</td>
+<td>Detecção de configurações inseguras e versões</td>
+</tr>
+<tr>
+<td><strong>Gobuster</strong></td>
+<td>Brute force de diretórios e arquivos web</td>
+<td>Descoberta de endpoints ocultos</td>
+</tr>
+<tr>
+<td><strong>ffuf</strong></td>
+<td>Fuzzer de requisições HTTP rápido</td>
+<td>Descoberta de parâmetros e caminhos</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="sast-static-application-security-testing">SAST — Static Application Security Testing</h2>
+<p>Ferramentas que analisam o <strong>código-fonte</strong> sem executar a aplicação.</p>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Linguagem</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bandit</strong></td>
+<td>Python</td>
+<td>Analisa código Python em busca de problemas de segurança comuns</td>
+</tr>
+<tr>
+<td><strong>Semgrep</strong></td>
+<td>Multi-linguagem</td>
+<td>Análise estática com regras customizáveis, muito rápido</td>
+</tr>
+<tr>
+<td><strong>SonarQube Community</strong></td>
+<td>Multi-linguagem</td>
+<td>Plataforma completa de qualidade e segurança de código</td>
+</tr>
+<tr>
+<td><strong>CodeQL</strong></td>
+<td>Multi-linguagem</td>
+<td>Análise semântica de código, usado pelo GitHub</td>
+</tr>
+<tr>
+<td><strong>ESLint (plugins de segurança)</strong></td>
+<td>JavaScript</td>
+<td>Com plugins como <code>eslint-plugin-security</code></td>
+</tr>
+<tr>
+<td><strong>Gosec</strong></td>
+<td>Go</td>
+<td>Verificador de segurança para código Go</td>
+</tr>
+<tr>
+<td><strong>Bearer</strong></td>
+<td>Multi-linguagem</td>
+<td>Focado em proteção de dados sensíveis (PII)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="analise-de-dependencias">Análise de Dependências</h2>
+<p>Ferramentas para detectar <strong>vulnerabilidades em bibliotecas e dependências</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Ecossistema</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>npm audit</strong></td>
+<td>Node.js</td>
+<td>Auditoria de dependências npm, integrado ao npm</td>
+</tr>
+<tr>
+<td><strong>pip-audit</strong></td>
+<td>Python</td>
+<td>Verifica pacotes Python contra bancos de vulnerabilidades</td>
+</tr>
+<tr>
+<td><strong>OWASP Dependency-Check</strong></td>
+<td>Java/Multi</td>
+<td>Identifica dependências com CVEs conhecidos</td>
+</tr>
+<tr>
+<td><strong>Trivy</strong></td>
+<td>Containers/Multi</td>
+<td>Scanner de vulnerabilidades para imagens Docker e repositórios</td>
+</tr>
+<tr>
+<td><strong>Snyk (free tier)</strong></td>
+<td>Multi-linguagem</td>
+<td>Monitoramento contínuo de dependências com notificações</td>
+</tr>
+<tr>
+<td><strong>Dependabot</strong></td>
+<td>GitHub</td>
+<td>Atualizações automáticas de dependências com PRs</td>
+</tr>
+<tr>
+<td><strong>Grype</strong></td>
+<td>Containers</td>
+<td>Scanner de vulnerabilidades de containers da Anchore</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="testes-de-injecao">Testes de Injeção</h2>
+<p>Ferramentas especializadas em <strong>SQL injection, XSS e similares</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SQLMap</strong></td>
+<td>SQL Injection</td>
+<td>Automação completa de detecção e exploração de SQL injection</td>
+</tr>
+<tr>
+<td><strong>XSSer</strong></td>
+<td>XSS</td>
+<td>Framework para detecção e exploração de Cross-Site Scripting</td>
+</tr>
+<tr>
+<td><strong>Commix</strong></td>
+<td>Command Injection</td>
+<td>Automatização de testes de command injection</td>
+</tr>
+<tr>
+<td><strong>NoSQLMap</strong></td>
+<td>NoSQL Injection</td>
+<td>Testes de injection para MongoDB, CouchDB, etc.</td>
+</tr>
+<tr>
+<td><strong>Ghauri</strong></td>
+<td>SQL Injection</td>
+<td>Alternativa moderna ao SQLMap, mais rápido em alguns cenários</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="autenticacao-e-senhas">Autenticação e Senhas</h2>
+<p>Ferramentas para testar <strong>robustez de autenticação</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hydra</strong></td>
+<td>Brute force de protocolos de autenticação (HTTP, SSH, FTP, etc.)</td>
+</tr>
+<tr>
+<td><strong>Medusa</strong></td>
+<td>Similar ao Hydra, paralelizado</td>
+</tr>
+<tr>
+<td><strong>John the Ripper</strong></td>
+<td>Crack de hashes de senhas offline</td>
+</tr>
+<tr>
+<td><strong>Hashcat</strong></td>
+<td>Crack de hashes com suporte a GPU — extremamente rápido</td>
+</tr>
+<tr>
+<td><strong>HaveIBeenPwned</strong></td>
+<td>API para verificar se senhas/emails estão em vazamentos</td>
+</tr>
+<tr>
+<td><strong>CeWL</strong></td>
+<td>Gerador de wordlists a partir de sites (para testes de força bruta)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="analise-de-trafego-e-rede">Análise de Tráfego e Rede</h2>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wireshark</strong></td>
+<td>Analisador de pacotes de rede, captura tráfego em tempo real</td>
+</tr>
+<tr>
+<td><strong>mitmproxy</strong></td>
+<td>Proxy MITM interativo em Python, bom para scripts</td>
+</tr>
+<tr>
+<td><strong>tcpdump</strong></td>
+<td>Captura de pacotes via linha de comando</td>
+</tr>
+<tr>
+<td><strong>nmap</strong></td>
+<td>Scanner de portas e serviços de rede</td>
+</tr>
+<tr>
+<td><strong>Masscan</strong></td>
+<td>Scanner de portas ultrarrápido</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="cloud-security">Cloud Security</h2>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Cloud</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prowler</strong></td>
+<td>AWS/Azure/GCP</td>
+<td>Auditoria de segurança e conformidade em cloud</td>
+</tr>
+<tr>
+<td><strong>ScoutSuite</strong></td>
+<td>Multi-cloud</td>
+<td>Auditoria de segurança multi-cloud</td>
+</tr>
+<tr>
+<td><strong>CloudSploit</strong></td>
+<td>Multi-cloud</td>
+<td>Scanner de configurações inseguras em cloud</td>
+</tr>
+<tr>
+<td><strong>Pacu</strong></td>
+<td>AWS</td>
+<td>Framework de exploração de AWS (para pentest)</td>
+</tr>
+<tr>
+<td><strong>S3Scanner</strong></td>
+<td>AWS</td>
+<td>Descoberta de S3 buckets expostos</td>
+</tr>
+<tr>
+<td><strong>Checkov</strong></td>
+<td>IaC</td>
+<td>Análise estática de Terraform, CloudFormation, Kubernetes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="analise-de-containers-e-kubernetes">Análise de Containers e Kubernetes</h2>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trivy</strong></td>
+<td>Scanner de imagens Docker, sistemas de arquivos e repositórios</td>
+</tr>
+<tr>
+<td><strong>Falco</strong></td>
+<td>Runtime security para containers — detecta comportamento suspeito</td>
+</tr>
+<tr>
+<td><strong>kube-bench</strong></td>
+<td>Verifica conformidade do Kubernetes com CIS Benchmark</td>
+</tr>
+<tr>
+<td><strong>kube-hunter</strong></td>
+<td>Testes de penetração em clusters Kubernetes</td>
+</tr>
+<tr>
+<td><strong>Cosign</strong></td>
+<td>Assinatura e verificação de imagens de containers</td>
+</tr>
+<tr>
+<td><strong>Hadolint</strong></td>
+<td>Linter de Dockerfile para boas práticas de segurança</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="labs-e-ambientes-de-pratica">Labs e Ambientes de Prática</h2>
+<p>Aplicações intencionalmente vulneráveis para aprendizado seguro.</p>
+<table>
+<thead>
+<tr>
+<th>Aplicação</th>
+<th>Descrição</th>
+<th>Vulnerabilidades</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DVWA</strong> (Damn Vulnerable Web App)</td>
+<td>Aplicação PHP/MySQL vulnerável por design</td>
+<td>SQL injection, XSS, CSRF, File Upload, etc.</td>
+</tr>
+<tr>
+<td><strong>WebGoat</strong></td>
+<td>Aplicação Java da OWASP com lições interativas</td>
+<td>Todas as categorias OWASP</td>
+</tr>
+<tr>
+<td><strong>Juice Shop</strong></td>
+<td>Aplicação Node.js da OWASP com 100+ desafios</td>
+<td>OWASP Top 10 completo</td>
+</tr>
+<tr>
+<td><strong>HackTheBox</strong></td>
+<td>Plataforma com máquinas virtuais para pentest</td>
+<td>Todos os tipos</td>
+</tr>
+<tr>
+<td><strong>TryHackMe</strong></td>
+<td>Plataforma guiada, ideal para iniciantes</td>
+<td>Todos os tipos</td>
+</tr>
+<tr>
+<td><strong>VulnHub</strong></td>
+<td>Máquinas virtuais para download e prática local</td>
+<td>Todos os tipos</td>
+</tr>
+<tr>
+<td><strong>PentesterLab</strong></td>
+<td>Exercícios web com certificação</td>
+<td>Web application security</td>
+</tr>
+<tr>
+<td><strong>Hacksplaining</strong></td>
+<td>Tutoriais interativos e gamificados</td>
+<td>OWASP Top 10 e mais</td>
+</tr>
+<tr>
+<td><strong>PortSwigger Web Academy</strong></td>
+<td>Labs do criador do Burp Suite</td>
+<td>Web application security</td>
+</tr>
+<tr>
+<td><strong>Root-Me</strong></td>
+<td>Plataforma francesa com desafios variados</td>
+<td>CTF e web security</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="verificacao-de-configuracao">Verificação de Configuração</h2>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SSL Labs</strong></td>
+<td>Testa configuração TLS de um servidor web</td>
+</tr>
+<tr>
+<td><strong>securityheaders.com</strong></td>
+<td>Verifica headers de segurança HTTP</td>
+</tr>
+<tr>
+<td><strong>Mozilla Observatory</strong></td>
+<td>Análise completa de segurança de sites</td>
+</tr>
+<tr>
+<td><strong>testssl.sh</strong></td>
+<td>Script para testar configuração SSL/TLS localmente</td>
+</tr>
+<tr>
+<td><strong>CIS-CAT</strong></td>
+<td>Verificação de conformidade com CIS Benchmarks</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="monitoramento-e-siem">Monitoramento e SIEM</h2>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Elastic Stack (ELK)</strong></td>
+<td>Elasticsearch + Logstash + Kibana — stack completa de logging</td>
+</tr>
+<tr>
+<td><strong>Wazuh</strong></td>
+<td>SIEM open source com agentes de endpoint</td>
+</tr>
+<tr>
+<td><strong>Graylog</strong></td>
+<td>Gerenciamento centralizado de logs</td>
+</tr>
+<tr>
+<td><strong>OSSEC</strong></td>
+<td>Sistema de detecção de intrusão baseado em host</td>
+</tr>
+<tr>
+<td><strong>Zeek</strong></td>
+<td>Framework de análise de tráfego de rede</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="integracao-em-pipeline-cicd">Integração em Pipeline CI/CD</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Exemplo: pipeline de segurança no GitHub Actions</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Security Scan</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">sast</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SAST com Semgrep</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">semgrep/semgrep-action@v1</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">          </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">p/owasp-top-ten</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="nt">dependency-check</span><span class="p">:</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Audit de dependências Python</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip-audit -r requirements.txt</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">  </span><span class="nt">container-scan</span><span class="p">:</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build e scan com Trivy</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">          </span><span class="no">docker build -t app:test .</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">          </span><span class="no">trivy image --exit-code 1 --severity HIGH,CRITICAL app:test</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Por onde começar?</p>
+<ol>
+<li><strong>Iniciante</strong>: comece pelo <a href="https://owasp.org/www-project-juice-shop/">OWASP Juice Shop</a> localmente com Docker</li>
+<li><strong>Intermediário</strong>: configure OWASP ZAP e analise seus próprios projetos</li>
+<li><strong>Avançado</strong>: use Burp Suite Professional + SQLMap em um programa de bug bounty</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "toc.integrate", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

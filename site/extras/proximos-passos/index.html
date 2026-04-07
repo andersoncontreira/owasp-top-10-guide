@@ -1,0 +1,1689 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Certificações, labs, roadmap e recursos para avançar na carreira em segurança">
+      
+      
+        <meta name="author" content="Anderson Contreira">
+      
+      
+      
+        <link rel="prev" href="../ferramentas/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Próximos Passos em Segurança Web - OWASP Top 10:2025 — Guia Didático</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#proximos-passos" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="OWASP Top 10:2025 — Guia Didático" class="md-header__button md-logo" aria-label="OWASP Top 10:2025 — Guia Didático" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Top 10:2025 — Guia Didático
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Próximos Passos em Segurança Web
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="orange"  aria-label="Tema claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Tema claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="orange"  aria-label="Tema escuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Tema escuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introducao/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introdução
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../vulnerabilidades/a01-broken-access-control/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Vulnerabilidades
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../glossario/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Extras
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OWASP Top 10:2025 — Guia Didático" class="md-nav__button md-logo" aria-label="OWASP Top 10:2025 — Guia Didático" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OWASP Top 10:2025 — Guia Didático
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introducao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introdução
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vulnerabilidades
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Vulnerabilidades
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a01-broken-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A01:2025 — Broken Access Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a02-security-misconfiguration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A02:2025 — Security Misconfiguration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a03-software-supply-chain-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A03:2025 — Software Supply Chain Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a04-cryptographic-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A04:2025 — Cryptographic Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a05-injection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A05:2025 — Injection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a06-insecure-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A06:2025 — Insecure Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a07-authentication-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A07:2025 — Authentication Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a08-software-data-integrity-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A08:2025 — Software or Data Integrity Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a09-security-logging-alerting-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A09:2025 — Security Logging and Alerting Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vulnerabilidades/a10-mishandling-exceptional-conditions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A10:2025 — Mishandling of Exceptional Conditions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Extras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossario/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossário de Segurança Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ferramentas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ferramentas de Segurança Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Próximos Passos em Segurança Web
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Próximos Passos em Segurança Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#certificacoes-recomendadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Certificações Recomendadas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Certificações Recomendadas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#por-nivel-de-experiencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por nível de experiência
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#labs-gratuitos-para-praticar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Labs Gratuitos para Praticar
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Labs Gratuitos para Praticar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aplicacoes-vulneraveis-locais" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aplicações vulneráveis locais
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plataformas-online" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plataformas online
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roadmap-de-estudos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roadmap de Estudos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Roadmap de Estudos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fase-1-fundamentos-3-6-meses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fase 1 — Fundamentos (3-6 meses)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fase-2-especializacao-em-web-3-6-meses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fase 2 — Especialização em Web (3-6 meses)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fase-3-pentest-profissional-6-12-meses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fase 3 — Pentest Profissional (6-12 meses)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#areas-de-especializacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Áreas de Especialização
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bug-bounty-ganhando-experiencia-e-dinheiro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Bounty — Ganhando Experiência (e Dinheiro)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bug Bounty — Ganhando Experiência (e Dinheiro)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plataformas-principais" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plataformas principais
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dicas-para-comecar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dicas para começar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comunidade-e-recursos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comunidade e Recursos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comunidade e Recursos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#podcasts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Podcasts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#canais-youtube" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Canais YouTube
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#livros-recomendados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Livros recomendados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#newsletters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Newsletters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etica-e-legalidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ética e Legalidade
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="proximos-passos">Próximos Passos</h1>
+<p>Você estudou o OWASP Top 10:2025. E agora? Este guia mostra como aprofundar seu conhecimento e avançar na carreira em segurança.</p>
+<hr />
+<h2 id="certificacoes-recomendadas">Certificações Recomendadas</h2>
+<h3 id="por-nivel-de-experiencia">Por nível de experiência</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">🟢 Iniciante</label><label for="__tabbed_1_2">🟡 Intermediário</label><label for="__tabbed_1_3">🔴 Avançado</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>Certificação</th>
+<th>Entidade</th>
+<th>Foco</th>
+<th>Custo estimado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CompTIA Security+</strong></td>
+<td>CompTIA</td>
+<td>Fundamentos de segurança</td>
+<td>~$400 USD</td>
+</tr>
+<tr>
+<td><strong>CEH (Certified Ethical Hacker)</strong></td>
+<td>EC-Council</td>
+<td>Hacking ético</td>
+<td>~$1.200 USD</td>
+</tr>
+<tr>
+<td><strong>eJPT</strong></td>
+<td>INE/eLearnSecurity</td>
+<td>Pentest júnior, prático</td>
+<td>~$200 USD</td>
+</tr>
+<tr>
+<td><strong>Google Cybersecurity Certificate</strong></td>
+<td>Google/Coursera</td>
+<td>Fundamentos práticos</td>
+<td>~$50/mês</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Dica</p>
+<p>O <strong>eJPT</strong> é o melhor custo-benefício para iniciantes que querem começar com pentest.
+O exame é 100% prático — você precisa comprometer máquinas reais, não responder questões teóricas.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>Certificação</th>
+<th>Entidade</th>
+<th>Foco</th>
+<th>Custo estimado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OSCP</strong> (Offensive Security Certified Professional)</td>
+<td>OffSec</td>
+<td>Pentest prático</td>
+<td>~$1.500 USD</td>
+</tr>
+<tr>
+<td><strong>GWEB</strong> (GIAC Web Application Penetration Tester)</td>
+<td>GIAC/SANS</td>
+<td>Pentest web</td>
+<td>~$8.000 USD</td>
+</tr>
+<tr>
+<td><strong>BSCP</strong> (Burp Suite Certified Practitioner)</td>
+<td>PortSwigger</td>
+<td>Web hacking</td>
+<td>Grátis (labs) + ~$99 USD</td>
+</tr>
+<tr>
+<td><strong>PNPT</strong> (Practical Network Penetration Tester)</td>
+<td>TCM Security</td>
+<td>Pentest de rede</td>
+<td>~$400 USD</td>
+</tr>
+<tr>
+<td><strong>Web Application Hacker's Handbook</strong></td>
+<td>Leitura</td>
+<td>Web security</td>
+<td>~$50 USD</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Dica</p>
+<p>O <strong>OSCP</strong> é o mais reconhecido na indústria. Exige dedicação intensa (90 dias de lab),
+mas abre muitas portas. O <strong>BSCP</strong> da PortSwigger é excelente para quem quer se especializar em web.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>Certificação</th>
+<th>Entidade</th>
+<th>Foco</th>
+<th>Custo estimado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OSEP</strong> (Offensive Security Experienced Penetration Tester)</td>
+<td>OffSec</td>
+<td>Evasão e AD</td>
+<td>~$1.500 USD</td>
+</tr>
+<tr>
+<td><strong>OSED</strong> (Offensive Security Exploit Developer)</td>
+<td>OffSec</td>
+<td>Desenvolvimento de exploits</td>
+<td>~$1.500 USD</td>
+</tr>
+<tr>
+<td><strong>GXPN</strong> (GIAC Exploit Researcher)</td>
+<td>GIAC/SANS</td>
+<td>Pesquisa de exploits</td>
+<td>~$9.000 USD</td>
+</tr>
+<tr>
+<td><strong>CISSP</strong></td>
+<td>(ISC)²</td>
+<td>Gestão de segurança</td>
+<td>~$700 USD</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<hr />
+<h2 id="labs-gratuitos-para-praticar">Labs Gratuitos para Praticar</h2>
+<h3 id="aplicacoes-vulneraveis-locais">Aplicações vulneráveis locais</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># OWASP Juice Shop — 100+ desafios, excelente para iniciantes e avançados</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>pull<span class="w"> </span>bkimminich/juice-shop
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">3000</span>:3000<span class="w"> </span>bkimminich/juice-shop
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Acesse: http://localhost:3000</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># DVWA — clássico, múltiplos níveis de dificuldade</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>docker<span class="w"> </span>pull<span class="w"> </span>vulnerables/web-dvwa
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>:80<span class="w"> </span>vulnerables/web-dvwa
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># Acesse: http://localhost</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># WebGoat — lições interativas da OWASP</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>docker<span class="w"> </span>pull<span class="w"> </span>webgoat/webgoat
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:8080<span class="w"> </span>webgoat/webgoat
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1"># Acesse: http://localhost:8080/WebGoat</span>
+</code></pre></div>
+<h3 id="plataformas-online">Plataformas online</h3>
+<table>
+<thead>
+<tr>
+<th>Plataforma</th>
+<th>Custo</th>
+<th>Nível</th>
+<th>Destaque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PortSwigger Web Security Academy</strong></td>
+<td>Grátis</td>
+<td>Todos</td>
+<td>Melhor conteúdo de web hacking disponível</td>
+</tr>
+<tr>
+<td><strong>Hacksplaining</strong></td>
+<td>Grátis</td>
+<td>Iniciante</td>
+<td>Formato interativo e gamificado</td>
+</tr>
+<tr>
+<td><strong>TryHackMe</strong></td>
+<td>Freemium</td>
+<td>Iniciante/Médio</td>
+<td>Trilhas guiadas, ótimo para começar</td>
+</tr>
+<tr>
+<td><strong>HackTheBox</strong></td>
+<td>Freemium</td>
+<td>Médio/Avançado</td>
+<td>Máquinas reais, comunidade ativa</td>
+</tr>
+<tr>
+<td><strong>PentesterLab</strong></td>
+<td>Freemium</td>
+<td>Todos</td>
+<td>Foco em web, com certificado</td>
+</tr>
+<tr>
+<td><strong>Root-Me</strong></td>
+<td>Grátis</td>
+<td>Todos</td>
+<td>+400 desafios variados</td>
+</tr>
+<tr>
+<td><strong>VulnHub</strong></td>
+<td>Grátis</td>
+<td>Médio/Avançado</td>
+<td>VMs para download e prática offline</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="roadmap-de-estudos">Roadmap de Estudos</h2>
+<h3 id="fase-1-fundamentos-3-6-meses">Fase 1 — Fundamentos (3-6 meses)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Redes → HTTP/HTTPS → Linux básico → Python básico
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>         ↓
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>OWASP Top 10 (este guia!)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>         ↓
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>DVWA + Juice Shop (prática)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>         ↓
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>TryHackMe — trilha &quot;Jr Penetration Tester&quot;
+</code></pre></div>
+<h3 id="fase-2-especializacao-em-web-3-6-meses">Fase 2 — Especialização em Web (3-6 meses)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>PortSwigger Web Academy (todos os módulos)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>         ↓
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Burp Suite — dominar intercepção, scanner, repeater, intruder
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>         ↓
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>CTFs focados em web (HackTheBox, PicoCTF)
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>         ↓
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Bug Bounty (HackerOne, Bugcrowd) — começo com programas com escopo amplo
+</code></pre></div>
+<h3 id="fase-3-pentest-profissional-6-12-meses">Fase 3 — Pentest Profissional (6-12 meses)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Metodologias: PTES, OWASP Testing Guide
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>         ↓
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Relatórios: como documentar e comunicar vulnerabilidades
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>         ↓
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>OSCP ou BSCP (certificação prática)
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>         ↓
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Especialização: mobile, cloud, API security, hardware
+</code></pre></div>
+<hr />
+<h2 id="areas-de-especializacao">Áreas de Especialização</h2>
+<p>Após dominar os fundamentos, considere se especializar em:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:5"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><input id="__tabbed_2_5" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Web &amp; API Security</label><label for="__tabbed_2_2">Cloud Security</label><label for="__tabbed_2_3">AppSec / DevSecOps</label><label for="__tabbed_2_4">Red Team / Pentest</label><label for="__tabbed_2_5">Malware &amp; Exploit Development</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ul>
+<li>GraphQL security</li>
+<li>OAuth/OIDC vulnerabilities</li>
+<li>WebSocket attacks</li>
+<li>API fuzzing e testing</li>
+<li><strong>Recurso</strong>: PortSwigger Web Security Academy</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<ul>
+<li>AWS/Azure/GCP security</li>
+<li>Container security (Docker/Kubernetes)</li>
+<li>Infrastructure as Code security</li>
+<li>Cloud SIEM e detecção</li>
+<li><strong>Recurso</strong>: CloudGoat (Rhino Security Labs)</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<ul>
+<li>SAST/DAST em pipelines CI/CD</li>
+<li>Threat modeling</li>
+<li>Security code review</li>
+<li>SBOM e supply chain</li>
+<li><strong>Recurso</strong>: OWASP SAMM, BSIMM</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<ul>
+<li>Active Directory attacks</li>
+<li>Evasão de EDR/AV</li>
+<li>Command &amp; Control (C2)</li>
+<li>Physical security</li>
+<li><strong>Recurso</strong>: OSCP, CRTE</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<ul>
+<li>Engenharia reversa (Ghidra, IDA)</li>
+<li>Desenvolvimento de exploits (buffer overflow, heap)</li>
+<li>Análise de malware</li>
+<li><strong>Recurso</strong>: OSED, Azeria Labs</li>
+</ul>
+</div>
+</div>
+</div>
+<hr />
+<h2 id="bug-bounty-ganhando-experiencia-e-dinheiro">Bug Bounty — Ganhando Experiência (e Dinheiro)</h2>
+<p>Bug bounty é a prática de reportar vulnerabilidades a empresas em troca de recompensas.</p>
+<h3 id="plataformas-principais">Plataformas principais</h3>
+<table>
+<thead>
+<tr>
+<th>Plataforma</th>
+<th>Tipo</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HackerOne</strong></td>
+<td>Privada e pública</td>
+<td>hackerone.com</td>
+</tr>
+<tr>
+<td><strong>Bugcrowd</strong></td>
+<td>Privada e pública</td>
+<td>bugcrowd.com</td>
+</tr>
+<tr>
+<td><strong>Intigriti</strong></td>
+<td>Europeia, focada em privacidade</td>
+<td>intigriti.com</td>
+</tr>
+<tr>
+<td><strong>Synack</strong></td>
+<td>Vetted, melhor pagamento</td>
+<td>synack.com</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dicas-para-comecar">Dicas para começar</h3>
+<div class="admonition tip">
+<p class="admonition-title">Como começar no Bug Bounty</p>
+<ol>
+<li><strong>Comece com escopo amplo</strong>: programas como HackerOne do governo dos EUA (h1.gov) têm escopo grande</li>
+<li><strong>Foque em um tipo de vulnerabilidade</strong>: torne-se especialista em IDOR ou XSS ou SSRF, não em tudo ao mesmo tempo</li>
+<li><strong>Leia relatórios públicos</strong>: o HackerOne tem disclosures públicos — leia centenas para entender os padrões</li>
+<li><strong>Documente bem</strong>: a qualidade do relatório é tão importante quanto encontrar a vulnerabilidade</li>
+<li><strong>Seja ético</strong>: nunca extrapole o escopo, reporte de forma responsável, aguarde o fix antes de divulgar</li>
+</ol>
+</div>
+<hr />
+<h2 id="comunidade-e-recursos">Comunidade e Recursos</h2>
+<h3 id="podcasts">Podcasts</h3>
+<ul>
+<li><strong>Darknet Diaries</strong> — histórias reais de hacking e crimes cibernéticos</li>
+<li><strong>Security Now</strong> — segurança técnica semanal com Steve Gibson</li>
+<li><strong>Risky Business</strong> — notícias de segurança para profissionais</li>
+<li><strong>Smashing Security</strong> — notícias de segurança de forma leve e divertida (em inglês)</li>
+</ul>
+<h3 id="canais-youtube">Canais YouTube</h3>
+<ul>
+<li><strong>John Hammond</strong> — CTFs, malware analysis, tutorial</li>
+<li><strong>IppSec</strong> — walkthroughs de HackTheBox (aprenda com ele antes de ver a resposta)</li>
+<li><strong>TCM Security</strong> — cursos e tutoriais de pentest</li>
+<li><strong>LiveOverflow</strong> — conteúdo técnico profundo sobre hacking</li>
+<li><strong>NetworkChuck</strong> — networking e segurança para iniciantes</li>
+</ul>
+<h3 id="livros-recomendados">Livros recomendados</h3>
+<table>
+<thead>
+<tr>
+<th>Livro</th>
+<th>Autor</th>
+<th>Nível</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The Web Application Hacker's Handbook</td>
+<td>Stuttard &amp; Pinto</td>
+<td>Intermediário</td>
+</tr>
+<tr>
+<td>Hacking: The Art of Exploitation</td>
+<td>Jon Erickson</td>
+<td>Avançado</td>
+</tr>
+<tr>
+<td>The Hacker Playbook 3</td>
+<td>Peter Kim</td>
+<td>Intermediário</td>
+</tr>
+<tr>
+<td>Real World Bug Hunting</td>
+<td>Peter Yaworski</td>
+<td>Iniciante/Médio</td>
+</tr>
+<tr>
+<td>Bug Bounty Bootcamp</td>
+<td>Vickie Li</td>
+<td>Iniciante/Médio</td>
+</tr>
+</tbody>
+</table>
+<h3 id="newsletters">Newsletters</h3>
+<ul>
+<li><strong>tl;dr sec</strong> — resumo semanal de segurança</li>
+<li><strong>Risky.Biz</strong> — notícias de segurança para profissionais</li>
+<li><strong>CISA Alerts</strong> — alertas oficiais do governo dos EUA sobre ameaças ativas</li>
+</ul>
+<hr />
+<h2 id="etica-e-legalidade">Ética e Legalidade</h2>
+<div class="admonition danger">
+<p class="admonition-title">Importante — Sempre atue legalmente</p>
+<p>Todo o conhecimento deste guia deve ser usado de forma <strong>ética e legal</strong>:</p>
+<ul>
+<li><strong>Nunca</strong> teste sistemas sem autorização explícita e por escrito</li>
+<li>Em Brasil, ataques a sistemas são crime (Lei 12.737/2012 — Lei Carolina Dieckmann, e Marco Civil da Internet)</li>
+<li>Bug bounty não substitui autorização — leia o escopo cuidadosamente</li>
+<li>Em caso de dúvida, pergunte ao responsável pelo sistema</li>
+</ul>
+<p>A linha entre segurança ofensiva e crime está na <strong>autorização</strong>. Com autorização, é pentest. Sem autorização, é crime.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Disclosure responsável</p>
+<p>Se você encontrar uma vulnerabilidade em um sistema sem programa de bug bounty:</p>
+<ol>
+<li>Documente a vulnerabilidade sem explorá-la além do necessário para confirmar</li>
+<li>Contate o responsável pelo sistema (email de segurança, CERT, ou contato geral)</li>
+<li>Dê um prazo razoável para correção (geralmente 90 dias — padrão Google Project Zero)</li>
+<li>Após o fix, você pode fazer divulgação pública (coordinated disclosure)</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "toc.integrate", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
